@@ -15,6 +15,7 @@
                   name="email"
                   label="Introduzca su email"
                   type="text"
+                  v-model="user.email"
                 ></v-text-field>
                 <v-text-field
                   id="password"
@@ -22,11 +23,14 @@
                   name="password"
                   label="Introduzca su contraseña"
                   type="password"
+                  v-model="user.password"
                 ></v-text-field>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" type="submit">Login</v-btn>
+                <v-btn color="primary" type="submit" @click="sendLogin"
+                  >Login</v-btn
+                >
               </v-card-actions>
             </v-card>
             <h3 class="loginForm-routeSignUp">
@@ -40,20 +44,20 @@
   </div>
 </template>
 <script>
-// import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-// export default {
-//   data: () => {
-//     return { user: { email: "", password: "" } };
-//   },
-//   methods: {
-//     async sendLogin() {
-//       const { email, password } = this.user;
-//       const auth = getAuth();
-//       await signInWithEmailAndPassword(auth, email, password);
-//       this.$router.push("/success");
-//     },
-//   },
-// };
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+export default {
+  data: () => {
+    return { user: { email: "", password: "" } };
+  },
+  methods: {
+    async sendLogin() {
+      const { email, password } = this.user;
+      const auth = getAuth();
+      await signInWithEmailAndPassword(auth, email, password);
+      this.$router.push("/home");
+    },
+  },
+};
 </script>
 <style>
 .loginForm {

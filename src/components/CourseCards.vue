@@ -3,7 +3,7 @@
     <v-row>
       <v-card width="500">
         <v-img height="250px" width="500px" :src="course.img"> </v-img>
-        <v-card-text>
+        <v-card-text class="card">
           <div class="font-weight-bold ml-8 mb-2">{{ course.title }}</div>
 
           <v-timeline align-top dense>
@@ -55,6 +55,9 @@ export default {
 };
 </script>
 <style>
+.card {
+  background-color: rgb(250, 250, 250);
+}
 v-img {
   background-image: cover;
 }
