@@ -22,6 +22,9 @@ import CourseCards from "@/components/CourseCards.vue";
 import { mapState } from "vuex";
 export default {
   components: { CourseCards },
+  mounted() {
+    this.$store.dispatch("getCourses");
+  },
   computed: {
     ...mapState(["courses"]),
   },

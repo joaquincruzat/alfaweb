@@ -1,6 +1,12 @@
-import axios from "axios";
 import Vue from "vue";
 import Vuex from "vuex";
+import {
+  getFirestore,
+  collection,
+  query,
+  // where,
+  onSnapshot,
+} from "firebase/firestore";
 
 Vue.use(Vuex);
 
@@ -15,9 +21,16 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async getCourses({ commit }) {
-      const { data: courses } = await axios.get("/courses.json");
-      commit("GET_COURSES", courses);
+    getCourses({ commit }) {
+      const db = getFirestore();
+      const q = query(collection(db, "courses"));
+      onSnapshot(q, (querySnapshot) => {
+        const courses = [];
+        querySnapshot.forEach((doc) => {
+          courses.push({ id: doc.id, data: doc.data() });
+        });
+        commit("GET_COURSES", courses);
+      });
     },
   },
   modules: {},

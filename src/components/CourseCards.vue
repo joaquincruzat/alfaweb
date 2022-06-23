@@ -2,44 +2,40 @@
   <v-container>
     <v-row>
       <v-card width="500">
-        <v-img height="250px" width="500px" :src="course.img"> </v-img>
+        <v-img height="250px" width="500px" :src="course.data.img"></v-img>
         <v-card-text class="card">
-          <div class="font-weight-bold ml-8 mb-2">{{ course.title }}</div>
+          <div class="font-weight-bold ml-8 mb-2"></div>
 
           <v-timeline align-top dense>
             <v-timeline-item>
               <div>
                 <div class="font-weight-normal">
-                  <p>
-                    Costo: <strong>{{ course.price }}</strong>
-                  </p>
+                  <p>Costo: {{ course.data.price }}<strong></strong></p>
                 </div>
-                <p>Duration: {{ course.duration }}</p>
+                <p>Duration: {{ course.data.duration }}</p>
               </div>
             </v-timeline-item>
             <v-timeline-item>
               <div>
                 <div class="font-weight-normal">
-                  <p>
-                    Cupos: <strong>{{ course.quota }}</strong>
-                  </p>
+                  <p>Cupos: {{ course.data.quota }}<strong></strong></p>
                 </div>
-                <p>Completado: {{ course.status }}</p>
+                <p>Completado: {{ course.data.status }}</p>
               </div>
             </v-timeline-item>
             <v-timeline-item>
               <div>
                 <div class="font-weight-normal">
-                  <p>Fecha de Registro:</p>
-                  <strong>{{ course.registrationDate }}</strong>
+                  <p>Fecha de Registro: {{ course.data.date }}</p>
+                  <strong></strong>
                 </div>
               </div>
             </v-timeline-item>
             <v-timeline-item>
               <div>
                 <div class="font-weight-normal">
-                  <p>Descripción:</p>
-                  <strong>{{ course.desc }}</strong>
+                  <p>Descripción: {{ course.data.desc }}</p>
+                  <strong></strong>
                 </div>
               </div>
             </v-timeline-item>
