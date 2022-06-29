@@ -1,7 +1,13 @@
 <template>
   <v-app>
     <v-container class="table">
-      <v-data-table :headers="headers" :items="courses" class="elevation-1">
+      <v-data-table
+        :headers="headers"
+        :items="courses"
+        class="elevation-1"
+        loading="true"
+        loading-text="Loading... Please wait"
+      >
         <template v-slot:top>
           <v-toolbar flat>
             <v-toolbar-title>Lista de cursos</v-toolbar-title>
@@ -49,6 +55,7 @@
                         <v-text-field
                           v-model="updatedItem.quota"
                           label="Cupos"
+                          type="number"
                           required
                         ></v-text-field>
                       </v-col>
@@ -74,11 +81,19 @@
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12">
-                        <v-text-field
+                        <p>Terminado</p>
+                        <v-checkbox
                           v-model="updatedItem.status"
-                          label="Terminado"
+                          label="Sí"
+                          value="Sí"
                           required
-                        ></v-text-field>
+                        ></v-checkbox>
+                        <v-checkbox
+                          v-model="updatedItem.status"
+                          value="No"
+                          label="No"
+                          required
+                        ></v-checkbox>
                       </v-col>
                       <v-col cols="12">
                         <v-text-field
@@ -125,6 +140,38 @@
           <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
         </template>
       </v-data-table>
+    </v-container>
+    <v-container>
+      <v-alert
+        dense
+        outlined
+        color="purple"
+        icon="mdi-account-group"
+        loading="true"
+        loading-text="Loading... Please wait"
+      >
+        Cantidad total de alumnos permitidos:
+        <strong>{{ $store.getters.totalQuotaCourses }}</strong> alumnos
+      </v-alert>
+      <v-alert dense outlined color="primary" icon="mdi-account-multiple-check">
+        Cantidad total de alumnos inscritos:
+        <strong>{{ $store.getters.totalRegisteredToCourses }}</strong> alumnos
+      </v-alert>
+      <v-alert dense outlined color="error" icon="mdi-account-clock">
+        Cantidad total de cupos restantes:
+        <strong>{{ $store.getters.remainingQuotaCourses }}</strong> alumnos
+      </v-alert>
+      <v-alert dense outlined color="pink" icon="mdi-check-all">
+        Cantidad total de cursos terminados:
+        <strong>{{ $store.getters.finishedCourses }}</strong>
+      </v-alert>
+      <v-alert dense outlined color="success" icon="mdi-bell-ring">
+        Cantidad total de cursos activos: <strong>type</strong>
+      </v-alert>
+      <v-alert dense outlined color="gray" icon="mdi-bell">
+        Cantidad total de cursos:
+        <strong>a</strong>
+      </v-alert>
     </v-container>
   </v-app>
 </template>

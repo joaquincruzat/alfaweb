@@ -6,32 +6,36 @@
         <v-layout justify-center>
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
-              <v-toolbar dark color="primary">
-                <v-toolbar-title>Inicie sesión</v-toolbar-title>
-              </v-toolbar>
-              <v-card-text>
-                <v-text-field
-                  prepend-icon="mdi-account"
-                  name="email"
-                  label="Introduzca su email"
-                  type="text"
-                  v-model="user.email"
-                ></v-text-field>
-                <v-text-field
-                  id="password"
-                  prepend-icon="mdi-lock"
-                  name="password"
-                  label="Introduzca su contraseña"
-                  type="password"
-                  v-model="user.password"
-                ></v-text-field>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="primary" type="submit" @click="sendLogin"
-                  >Login</v-btn
-                >
-              </v-card-actions>
+              <form @submit.prevent="handleLoginForm" ref="loginFormRef">
+                <v-toolbar dark color="primary">
+                  <v-toolbar-title>Inicie sesión</v-toolbar-title>
+                </v-toolbar>
+                <v-card-text>
+                  <v-text-field
+                    prepend-icon="mdi-account"
+                    name="email"
+                    label="Introduzca su email"
+                    type="text"
+                    v-model="user.email"
+                    :rules="required"
+                  ></v-text-field>
+                  <v-text-field
+                    id="password"
+                    prepend-icon="mdi-lock"
+                    name="password"
+                    label="Introduzca su contraseña"
+                    type="password"
+                    v-model="user.password"
+                    :rules="required"
+                  ></v-text-field>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="primary" type="submit" @click="sendLogin"
+                    >Login</v-btn
+                  >
+                </v-card-actions>
+              </form>
             </v-card>
             <h3 class="loginForm-routeSignUp">
               Si no tiene una cuenta,
@@ -55,6 +59,14 @@ export default {
       const auth = getAuth();
       await signInWithEmailAndPassword(auth, email, password);
       this.$router.push("/home");
+    },
+    required(value) {
+      return !!value || "Este campo es obligatorio";
+    },
+    handleSignUpForm() {
+      if (this.$refs.signUpFormRef.validate()) {
+        console.log("es válido");
+      }
     },
   },
 };

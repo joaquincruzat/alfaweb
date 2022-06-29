@@ -14,7 +14,6 @@ export default new Vuex.Store({
   state: {
     courses: [],
   },
-  getters: {},
   mutations: {
     GET_COURSES(state, courses) {
       state.courses = courses;
@@ -31,6 +30,33 @@ export default new Vuex.Store({
         });
         commit("GET_COURSES", courses);
       });
+    },
+  },
+  getters: {
+    totalQuotaCourses(state) {
+      return state.courses.reduce((i, course) => {
+        i = i + parseInt(course.data.quota);
+        return i;
+      }, 0);
+    },
+    totalRegisteredToCourses(state) {
+      return state.courses.reduce((i, course) => {
+        i = i + parseInt(course.data.registered);
+        return i;
+      }, 0);
+    },
+    remainingQuotaCourses(state) {
+      return state.courses.reduce((i, course) => {
+        i =
+          i + (parseInt(course.data.quota) - parseInt(course.data.registered));
+        return i;
+      }, 0);
+    },
+    finishedCourses(state) {
+      return state.courses.filter((course) => course.data.status === "Sí");
+    },
+    currentCourses(state) {
+      return state.courses.filter((course) => course.data.status === "No");
     },
   },
   modules: {},
