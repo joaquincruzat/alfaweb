@@ -51,7 +51,7 @@ export default {
       const { email, password } = this.signUpUser;
       const auth = getAuth();
       await createUserWithEmailAndPassword(auth, email, password);
-      this.$router.push("/home");
+      this.$router.push("/");
     },
     handleSignUpForm() {
       if (this.$refs.signUpFormRef.validate()) {

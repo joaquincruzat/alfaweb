@@ -166,11 +166,12 @@
         <strong>{{ $store.getters.finishedCourses }}</strong>
       </v-alert>
       <v-alert dense outlined color="success" icon="mdi-bell-ring">
-        Cantidad total de cursos activos: <strong>type</strong>
+        Cantidad total de cursos activos:
+        <strong>{{ $store.getters.activeCourses }}</strong>
       </v-alert>
       <v-alert dense outlined color="gray" icon="mdi-bell">
         Cantidad total de cursos:
-        <strong>a</strong>
+        <strong>{{ $store.getters.totalCourses }}</strong>
       </v-alert>
     </v-container>
   </v-app>

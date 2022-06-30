@@ -53,10 +53,19 @@ export default new Vuex.Store({
       }, 0);
     },
     finishedCourses(state) {
-      return state.courses.filter((course) => course.data.status === "Sí");
+      return state.courses.reduce((i, course) => {
+        if (course.data.status === "Sí") i++;
+        return i;
+      }, 0);
     },
-    currentCourses(state) {
-      return state.courses.filter((course) => course.data.status === "No");
+    activeCourses(state) {
+      return state.courses.reduce((i, course) => {
+        if (course.data.status === "No") i++;
+        return i;
+      }, 0);
+    },
+    totalCourses(state) {
+      return state.courses.length;
     },
   },
   modules: {},

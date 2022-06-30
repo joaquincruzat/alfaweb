@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+//import store from "@/store";
 import HomeView from "../views/HomeView.vue";
 import LoginView from "../views/LoginView.vue";
 import SignUpView from "../views/SignUpView.vue";
@@ -9,12 +10,13 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/home",
+    path: "/",
     name: "home",
     component: HomeView,
+    meta: { login: true },
   },
   {
-    path: "/",
+    path: "/login",
     name: "login",
     component: LoginView,
   },
@@ -37,15 +39,15 @@ const router = new VueRouter({
   routes,
 });
 
-// import { getAuth } from "firebase/auth";
-// router.beforeEach((to, from, next) => {
-//   const auth = getAuth();
-//   const user = auth.currentUser;
-//   const authRequired = to.meta.login;
-//   if (!user && authRequired) {
-//     next("/home");
-//   } else {
-//     next();
-//   }
-// });
+import { getAuth } from "firebase/auth";
+router.beforeEach((to, from, next) => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const authRequired = to.meta.login;
+  if (!user && authRequired) {
+    next("/login");
+  } else {
+    next();
+  }
+});
 export default router;
