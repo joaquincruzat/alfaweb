@@ -7,6 +7,7 @@ import {
   // where,
   onSnapshot,
 } from "firebase/firestore";
+import { sessionModule as session } from "@/store/modules/session.js";
 
 Vue.use(Vuex);
 
@@ -68,5 +69,7 @@ export default new Vuex.Store({
       return state.courses.length;
     },
   },
-  modules: {},
+  modules: {
+    session,
+  },
 });

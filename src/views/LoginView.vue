@@ -6,7 +6,10 @@
         <v-layout justify-center>
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
-              <form @submit.prevent>
+              <v-form
+                @submit.prevent="handleSignInFormSubmit"
+                ref="signInFormRef"
+              >
                 <v-toolbar dark color="primary">
                   <v-toolbar-title>Inicie sesión</v-toolbar-title>
                 </v-toolbar>
@@ -16,7 +19,8 @@
                     name="email"
                     label="Introduzca su email"
                     type="text"
-                    v-model="user.email"
+                    v-model="credentials.email"
+                    :rules="[required, mustBeEmail]"
                   ></v-text-field>
                   <v-text-field
                     id="password"
@@ -24,16 +28,15 @@
                     name="password"
                     label="Introduzca su contraseña"
                     type="password"
-                    v-model="user.password"
+                    v-model="credentials.password"
+                    :rules="[required, minLength(6)]"
                   ></v-text-field>
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="primary" type="submit" @click="sendLogin"
-                    >Login</v-btn
-                  >
+                  <v-btn color="primary" type="submit">Login</v-btn>
                 </v-card-actions>
-              </form>
+              </v-form>
             </v-card>
             <h3 class="loginForm-routeSignUp">
               Si no tiene una cuenta,
@@ -46,29 +49,47 @@
   </div>
 </template>
 <script>
-import {
-  getAuth,
-  setPersistence,
-  signInWithEmailAndPassword,
-  browserSessionPersistence,
-} from "firebase/auth";
+// import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { mapActions } from "vuex";
 export default {
-  data: () => {
-    return { user: { email: "", password: "" } };
-  },
+  data: () => ({
+    credentials: { email: "", password: "" },
+  }),
   methods: {
-    async sendLogin() {
-      const { email, password } = this.user;
-      const auth = getAuth();
-      setPersistence(auth, browserSessionPersistence)
-        .then(() => {
-          return signInWithEmailAndPassword(auth, email, password);
-        })
-        .then(() => {
-          this.$router.push("/");
-        });
+    ...mapActions("session", ["signInWithEmailAndPassword"]),
+    async handleSignInFormSubmit() {
+      if (this.$refs.signInFormRef.validate()) {
+        try {
+          await this.signInWithEmailAndPassword(this.credentials);
+          this.credentials = {
+            email: "",
+            password: "",
+          };
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    },
+    mustBeEmail(value) {
+      return (
+        //eslint-disable-next-line
+        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
+        "El campo debe ser un email válido"
+      );
+    },
+    minLength(length) {
+      return (value) =>
+        String(value).length >= length || "Introduzca una contraseña válida";
     },
   },
+  // methods: {
+  //   async sendLogin() {
+  //     const { email, password } = this.user;
+  //     const auth = getAuth();
+  //     await signInWithEmailAndPassword(auth, email, password);
+  //     this.$router.push("/");
+  //   },
+  // },
 };
 </script>
 <style>

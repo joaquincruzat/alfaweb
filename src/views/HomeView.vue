@@ -1,6 +1,10 @@
 <template>
   <v-main>
     <v-container class="container" fluid>
+      <div class="adminBtn">
+        <v-btn color="primary" to="/admin"> Administrar cursos </v-btn>
+      </div>
+
       <v-row>
         <v-col
           cols="12"
@@ -35,5 +39,9 @@ export default {
   margin-top: 20px;
   max-width: 70vw;
   align-self: center;
+}
+.adminBtn {
+  display: flex;
+  justify-content: end;
 }
 </style>

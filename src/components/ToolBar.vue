@@ -7,29 +7,38 @@
         <v-icon>mdi-home</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
-      <h5 class="admin">Administrar cursos</h5>
-      <v-btn icon to="/admin">
-        <v-icon>mdi-cog</v-icon>
-      </v-btn>
-      <v-btn text small type="submit" @click="closeSession">
-        {{ user.email }}
-        <v-icon>mdi-login</v-icon>
-      </v-btn>
+      <ToolBarSession v-if="activeLogin" />
     </v-toolbar>
   </v-card>
 </template>
 <script>
-import { getAuth, signOut } from "firebase/auth";
+import ToolBarSession from "@/components/ToolBarSession";
+import { mapGetters } from "vuex";
 export default {
-  methods: {
-    async closeSession() {
-      const auth = getAuth();
-      signOut(auth).then(() => {
-        this.$router.push("/login");
-      });
-    },
+  components: {
+    ToolBarSession,
+  },
+  data: () => ({
+    drawer: false,
+  }),
+  computed: {
+    ...mapGetters("session", ["activeLogin"]),
+  },
+  mounted() {
+    this.$store.dispatch("session/subscribeToAuthStateChange");
   },
 };
+// import { getAuth, signOut } from "firebase/auth";
+// export default {
+//   methods: {
+//     async closeSession() {
+//       const auth = getAuth();
+//       signOut(auth).then(() => {
+//         this.$router.push("/login");
+//       });
+//     },
+//   },
+// };
 </script>
 <style>
 #no-background-hover::before {

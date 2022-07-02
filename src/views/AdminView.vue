@@ -30,103 +30,132 @@
                 </v-btn>
               </template>
               <v-card color="yellow lighten-5">
-                <v-card-title>
-                  <span class="text-h5"></span>
-                </v-card-title>
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <h1>Agregando curso</h1>
-                      <v-col cols="12">
-                        <v-text-field
-                          v-model="updatedItem.title"
-                          label="Curso"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field
-                          v-model="updatedItem.img"
-                          placeholder="URL de la imagen del curso"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field
-                          v-model="updatedItem.quota"
-                          label="Cupos"
-                          type="number"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field
-                          v-model="updatedItem.registered"
-                          label="Inscritos"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field
-                          v-model="updatedItem.duration"
-                          label="Duración"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field
-                          v-model="updatedItem.price"
-                          label="Costo"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <p>Terminado</p>
-                        <v-checkbox
-                          v-model="updatedItem.status"
-                          label="Sí"
-                          value="Sí"
-                          required
-                        ></v-checkbox>
-                        <v-checkbox
-                          v-model="updatedItem.status"
-                          value="No"
-                          label="No"
-                          required
-                        ></v-checkbox>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field
-                          v-model="updatedItem.date"
-                          label="Fecha de inicio"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field
-                          v-model="updatedItem.cod"
-                          placeholder="Código del curso (Formato: C + 'número de curso')"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-textarea
-                          v-model="updatedItem.desc"
-                          label="Descripción del curso"
-                          required
-                        ></v-textarea>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-card-text>
+                <v-form @submit.prevent="handleSaveForm" ref="saveFormRef">
+                  <v-card-title>
+                    <span class="text-h5"></span>
+                  </v-card-title>
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <h1>Agregando curso</h1>
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="updatedItem.title"
+                            label="Curso"
+                            required
+                            :rules="[required]"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="updatedItem.img"
+                            placeholder="URL de la imagen del curso"
+                            required
+                            :rules="[required]"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="updatedItem.quota"
+                            label="Cupos"
+                            type="number"
+                            required
+                            :rules="[required]"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="updatedItem.registered"
+                            label="Inscritos"
+                            type="number"
+                            required
+                            :rules="[required]"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="updatedItem.duration"
+                            label="Duración"
+                            required
+                            :rules="[required]"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="updatedItem.price"
+                            label="Costo"
+                            required
+                            :rules="[required]"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                          <p>Terminado</p>
+                          <div class="d-flex justify-space-around">
+                            <v-checkbox
+                              v-model="updatedItem.status"
+                              label="Sí"
+                              value="Sí"
+                              required
+                              :rules="[required]"
+                            ></v-checkbox>
+                            <v-checkbox
+                              v-model="updatedItem.status"
+                              value="No"
+                              label="No"
+                              input-value="true"
+                              :rules="[required]"
+                            ></v-checkbox>
+                          </div>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="updatedItem.date"
+                            label="Fecha de inicio"
+                            type="date"
+                            required
+                            :rules="[required]"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="updatedItem.cod"
+                            placeholder="Código del curso (Formato: C + 'número de curso')"
+                            required
+                            :rules="[required]"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-textarea
+                            v-model="updatedItem.desc"
+                            label="Descripción del curso"
+                            required
+                            :rules="[required]"
+                          ></v-textarea>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card-text>
 
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="close">
-                    Cancel
-                  </v-btn>
-                  <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
-                </v-card-actions>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      color="blue darken-1"
+                      text
+                      type="submit"
+                      @click="close"
+                    >
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      color="blue darken-1"
+                      text
+                      type="submit"
+                      @click="save"
+                    >
+                      Save
+                    </v-btn>
+                  </v-card-actions>
+                </v-form>
               </v-card>
             </v-dialog>
           </v-toolbar>
@@ -253,6 +282,15 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    //FORM RULES
+    handleSaveForm() {
+      if (this.$refs.saveFormRef.validate()) {
+        console.log("es válido");
+      }
+    },
+    required(value) {
+      return !!value || "Este campo es obligatorio";
     },
   },
 };

@@ -9,6 +9,7 @@ import AdminView from "../views/AdminView.vue";
 Vue.use(VueRouter);
 
 const routes = [
+  { path: "*", redirect: "/login" },
   {
     path: "/",
     name: "home",
